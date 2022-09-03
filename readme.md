@@ -4,7 +4,7 @@ Welcome to my solution for the tempus coding challenge. It will be completed bet
 
 <h3>Task One</h3>
 
-Please view my documentation of the linux ```stat``` command in [this folder](task_01/).
+Please view my documentation of the linux file system as well as the ```stat``` command in [this folder](task_01/).
 
 <h3>Task Two</h3>
 
