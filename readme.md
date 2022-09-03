@@ -4,12 +4,12 @@ Welcome to my solution for the tempus coding challenge. It will be completed bet
 
 <h3>Task One</h3>
 
-Please view my documentation of the linux ```stat``` command in [this folder](task_one/).
+Please view my documentation of the linux ```stat``` command in [this folder](task_01/).
 
 <h3>Task Two</h3>
 
-Getting familiar with Julia, a new language for me, and Pluto, which is similar to Jupyter. Also, implementing a bioinformatics tool with an infix operator in   [here](task_two/).
+Getting familiar with Julia, a new language for me, and Pluto, which is similar to Jupyter. Also, implementing a bioinformatics tool with an infix operator in   [here](task_02/).
 
 <h3>Task Three</h3>
 
-Implementing a python decorator, and testing with pytest. [Folder](task_three/).
+Implementing a python decorator, and testing with pytest. [Folder](task_03/).
