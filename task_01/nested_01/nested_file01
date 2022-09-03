@@ -1,0 +1,57 @@
+#include <iostream>
+
+using namespace std;
+void swap(int* a, int* b) {
+    *a = *a +*b;
+    *b = *a -*b;
+    *a -= *b;
+
+}
+
+int partition(int *arr, int low, int high) {
+    int pivot = arr[high];
+    int i = low;
+    int j = low;
+    while(i <= high) {
+        if (arr[i] < pivot) {
+            i++;            
+        } else {
+            swap(arr[i], arr[j]);
+            i++;
+            j++;
+        
+        }
+    }
+    return j-1;
+}
+void qsort(int* arr, int low, int high) {
+    if (low >= high) {
+        return;
+    }
+    int p = partition(arr, low, high);
+    qsort(arr, low, p-1);
+    qsort(arr, p+1, high);
+}
+
+
+int main(int argc, char** argv) {
+    int a = 5;
+    int b = 10;
+
+    swap(a, b);
+    
+    int arr[] = {9,3,4,2,1,8};
+    int n = sizeof(arr)/sizeof(int);
+    for (auto e : arr) {
+        cout << e;
+    }
+    cout << endl;
+
+    qsort(arr, 0, n-1);
+for (auto e : arr) {
+        cout << e;
+    }
+    cout << endl;
+
+    
+}
