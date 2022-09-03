@@ -1,7 +1,15 @@
 <h1>Tempus Coding Challenge</h1>
 
-Welcome to my solution for the tempus coding challenge. It will be completed between September 3rd and September 5th, 2022.
+Welcome to my solution for the tempus coding challenge. It will be completed between September 3rd and September 5th, 2022. Completed on Ubuntu 22.04.1.
 
 <h3>Task One</h3>
 
-Please view my documentation of the linux ```stat``` command in the folder [a relative link](task_one/).
+Please view my documentation of the linux ```stat``` command in [this folder](task_one/).
+
+<h3>Task Two</h3>
+
+Getting familiar with Julia, a new language for me, and Pluto, which is similar to Jupyter. Also, implementing a bioinformatics tool with an infix operator in   [here](task_two/).
+
+<h3>Task Three</h3>
+
+Implementing a python decorator, and testing with pytest. [Folder](task_three/).
