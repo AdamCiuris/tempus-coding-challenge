@@ -25,8 +25,8 @@ note that a complement is upside down and needs to be reversed
 =#
 function complement(strand::String) 
 	n = ""
-	
-		for s in Iterators.reverse(strand) # for "upside-down" dna strand
+	iter = Iterators.reverse(strand) # doing this because im unsure if a new iterator will be made per loop
+		for s in iter # for "upside-down" dna strand
 			n = n*comps[s] # concats each key value bind from comps dict
 		end
 	return n
