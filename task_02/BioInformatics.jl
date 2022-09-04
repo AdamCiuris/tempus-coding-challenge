@@ -6,12 +6,16 @@ using InteractiveUtils
 
 # ╔═╡ aa96bc58-2be4-11ed-3820-656ec59cf1a9
 begin
-
 # map of complements for DNA pairs	
-comps = Dict("a" => "t", "A" => "T", "c" => "g", "C" => "G", "t" => "a", "T" => "A", "g" => "c", "G" => "C")
+comps = Dict('a' => 't', 'A' => 'T', 'c' => 'g', 'C' => 'G', 't' => 'a', 'T' => 'A', 'g' => 'c', 'G' => 'C')
+	
 ▷(x, y) = y(x) 
+
+#=
+calls standard library reverse for string reversal
+=#
 function reverse(strand::String) 
-	return strand
+	return Base.reverse(strand)
 end
 
 	
@@ -19,11 +23,11 @@ end
 returns the complements of the given dna strand
 =#
 function complement(strand::String) 
-	for s in strand
-		
-		println(comps[s])
-	end
-	return strand
+	n = ""
+		for s in strand
+			n = n*comps[s] # concats each key value bind from comps dict
+		end
+	return n
 end
 
 #=
