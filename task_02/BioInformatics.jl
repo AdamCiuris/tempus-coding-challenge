@@ -15,7 +15,7 @@ comps = Dict('a' => 't', 'A' => 'T', 'c' => 'g', 'C' => 'G', 't' => 'a', 'T' => 
 calls standard library reverse for string reversal
 =#
 function reverse(strand::String) 
-	return Base.reverse(strand) # there are apparently no allocations in this
+	return Base.reverse(strand) 
 end
 
 	
@@ -26,7 +26,7 @@ note that a complement is upside down and needs to be reversed
 function complement(strand::String) 
 	n = ""
 	
-		for s in Base.reverse(strand)
+		for s in Iterators.reverse(strand) # for "upside-down" dna strand
 			n = n*comps[s] # concats each key value bind from comps dict
 		end
 	return n
