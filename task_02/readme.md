@@ -15,6 +15,5 @@ julia> Pluto.run()
 ```
 
 Use the localhost link to connect to the Pluto server and select your notebook. Browser extensions caused me issues so I used a fresh Firefox install.
-<h3></h3>
 
-
+Pluto creates some kind of server available on LAN to edit files much like a jupyter notebook.
