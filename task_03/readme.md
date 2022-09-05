@@ -11,5 +11,5 @@ for tests:
 
 run ```pytest test.py``` to complete tests.
 
-<h3>What is a decorator</h3>
+<h3>What is a decorator?</h3>
 A decorator is a way to modify the behavior of a function or method without changing the lower level implementation details. 
