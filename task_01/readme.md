@@ -32,4 +32,33 @@ The hidden links "." and ".." are links to the current directory and the parent 
 
 ```man stat | col -b > stat.txt``` to dump to linux manual page for ```stat```. The man page is the best way to learn any command.
 
+---
+
 <h3>Document all your discoveries, experiments including commands and their results in a markdown document or text file and submit to a public github account. We are interested in how deeply you investigate, how organized and thorough your notes are.</h3>
+
+<h3>If directories and files are just inodes, what keeps track of whether an inode is a directory or a file?</h3>
+
+Stat lists what the file mode is. On my system an inode contains whether a file is a directory or file. Since a directory is just a file containing a table of other file's inodes I assume that is another way the OS keeps track.
+
+
+<h3>Where is the data determining if an inode is a directory or file stored?</h3>
+
+
+In A POSIX inode, the kind  the file mode is stored within the inode. It stores whether it is a regular file, a directory, or a symbolic link.
+
+
+<h3>what happens to symbolic links when pushed to a repo? do they work for other users?</h3>
+
+Git only stores the contents of the link. If you click on symbolic on github you can see that it just stores the name nested_01/. Git or the operating system must restore the rest if it is pulled by someone else.
+
+<h3>What is helpful about symbolic links compared to copying the file to multiple locations?</h3>
+
+It is only a link to the file. It does not hard copy all of the data to where it is linking. I actually use a hard link to the html file for my personal site for this reason. It makes it easier to do updates as well.
+
+That being said, you could point to a directory in a completely different location than the directory you're currently in easily with a symbolic link.
+
+<h3>Why doesn't gcp and aws have linked files-- a name living at one location that points to content living at another location? Is it possible to have them in a cloud storage system? </h3>
+
+There is no guarentee that an inode number will be unique for another file system. Since a hard link is just pointing to another inode it may point to something random on another system. If it were possible it would have to rely on the names of files instead of an inode number.
+
+I think in cloud storage you may be sharing space with other users. If I had to guess, you would have to change the permissions and inode numbers that can be accessed in order to implement linked files, or allocate a certain range of inodes to a cloud user.
