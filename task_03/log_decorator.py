@@ -1,11 +1,29 @@
 def log_it(func):
     
     def implementation(*args, **kwargs):
+        
         statement = "[LOG] %s (%s %s) ==>" 
-        statement = statement % (func, args, kwargs)  # fstring 
+        try:
+            statement = statement % (func, args, kwargs)  # fstring 
 
-        ret = func(*args, **kwargs)
-        print(statement, ret, type(ret)) # memory address in hex
+            ret = func(*args, **kwargs)
+            print(statement, ret, type(ret)) # memory address in hex
+        except FileNotFoundError as e: # most common exception
+            print("File not found. Try creating the file and trying again.")
+            ret = None
+            print(statement, ret, type(ret)) # memory address in hex
+            raise e
+        except ValueError as e: # can this even be reached?
+            ret = None
+            print("Invalid value error.")
+            print(statement, ret, type(ret)) # memory address in hex
+            raise e
+        except Exception as e: # prevents crashing for rest of uncommon exceptions
+            ret = None
+            print("See error description: " + e.__str__())
+            print(statement, ret, type(ret)) # memory address in hex
+            raise e
+
         return ret # return this in case function has a return
     return implementation
 
@@ -41,39 +59,45 @@ def mult(x, y):
 def div(x, y):
     return x/y
 
+# call with log_it(add)(1,2) for example of no annotation decorator implementation
+def add(x,y):
+    return x+y
+
 
 
 def main():
-    stri = ""
-
-    
-    # print("Please enter a 1 for debug mode or a 0 for no debug logs")
-    # mode =""
-    # mode = str(input())
-    # while (mode != "0" and mode != "1"):
-    #     print("invalid input, try again")
-    #     print("Please enter a 1 for debug mode or a 0 for no debug logs")
-    #     mode = input();
-
-    
-    print("Please enter a 0 followed by a filename located in resources")
-    print("OR enter a 1 followed by add, sub, mult, div for the arithmetic operation")
-    print("follow the operator by the two numbers")
-    print("OR enter exit to quit program")
+    stri = "" # used for cmd line
+    # implicit string
+    openingStatement = ("Please enter a 0 followed by a filename located in resources\n"
+                       "OR enter a 1 followed by add, sub, mult, div for the arithmetic operation\n"
+                       "follow the operator by the two numbers\n"
+                       "OR enter exit to quit program")
+    print(openingStatement)
     while (stri != 'exit'):
         stri = str(input())
         tokens = stri.split()
-        if (tokens[0] == "0"):
-            cat(tokens[1])
-        elif(tokens[0] == "1"):
-            if (tokens[1] == "add"):
-                add(int(tokens[2]), int(tokens[3])) #add
-            elif (tokens[1] == "sub"):
-                sub(int(tokens[2]), int(tokens[3])) #sub
-            elif (tokens[1] == "mult"):
-                mult(int(tokens[2]), int(tokens[3])) #multiply
-            elif (tokens[1] == "div"):
-                div(int(tokens[2]), int(tokens[3])) #divide
+        try:
+            if(len(tokens) > 1):
+                if (tokens[0] == "0"):
+                    cat(tokens[1])
+                elif(tokens[0] == "1"):
+                    if (tokens[1] == "add"):
+                        add(int(tokens[2]), int(tokens[3])) # add
+                    elif (tokens[1] == "sub"):
+                        sub(int(tokens[2]), int(tokens[3])) # sub
+                    elif (tokens[1] == "mult"):
+                        mult(int(tokens[2]), int(tokens[3])) # multiply
+                    elif (tokens[1] == "div"):
+                        div(int(tokens[2]), int(tokens[3])) # divide
+                    else:
+                        print("Wrong input, try again.") # TODO refactor
+                else:
+                    print("Wrong input, try again.")
+            else:
+                print("Wrong input, try again.")
+        except Exception as e:
+            # e.__str__() just converts object to string
+            print("Error raised in cmd line!: " + e.__str__()) # catch ValueError errors of int() in logger since they happen before it
 
 
 if __name__ == "__main__":
