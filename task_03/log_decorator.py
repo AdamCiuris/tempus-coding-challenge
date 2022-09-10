@@ -67,6 +67,9 @@ def add(x,y):
 
 def main():
     stri = "" # used for cmd line
+    huh, what= div(123,123)
+    print (huh)
+    print(what)
     # implicit string
     openingStatement = ("Please enter a 0 followed by a filename located in resources\n"
                        "OR enter a 1 followed by add, sub, mult, div for the arithmetic operation\n"
