@@ -76,6 +76,7 @@ def log_it(func):
         except Exception as e: # prevents crashing for rest of uncommon exceptions
             ret = None
             errMessage = "Miscellaneous: " + e.__str__()
+            fullStatement = errMessage+"\n"+statement+str(ret)+" "+str(type(ret))
             raise e
         finally: 
             print(fullStatement)
@@ -119,17 +120,14 @@ def div(x, y):
 # def add(x,y):
 #     return x+y
 
-
-
-
-
 def main():
     stri = "" # used for cmd line
     # huh = log_it(lambda a,b: a*b)(1,2)
     
     global logFileName 
     logFileName = newLogFile()
-
+    
+    # implicit string
     openingStatement = ("Please enter a 0 followed by a filename located in resources\n"
                        "OR enter a 1 followed by add, sub, mult, div for the arithmetic operation\n"
                        "follow the operator by the two numbers\n"
