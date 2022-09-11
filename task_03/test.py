@@ -17,9 +17,9 @@ def setup_function(function):
 
 def teardown_module(module):
     """runs once at the end to clean up test file output"""
-    file1 = Path("./logs/tests")
+    file1 = Path("./logs/tests") # this is the dump for all the test's logging. It does not get used and any other tests should go there as well. 
     file2 = Path("./logs/test_logfile().txt")
-    file1.unlink()
+    file1.unlink() # deletes
     file2.unlink()
 
 def test_answer_add():
@@ -109,7 +109,8 @@ def test_ZeroDivisionError():
         assert True
 
 def test_FileNotFoundError():
-    """file not found test. Will fail if the unlikely filename actually exists"""
+    """file not found test. Will fail if the unlikely filename actually exists
+    note that this creates AND deletes the file it uses for logging"""
     try:
         cat("&(*#$&*HFJKDSJHLKSD") # unlikely filename
         assert False #no exception
@@ -146,7 +147,6 @@ def test_logFile():
     assert Lines[1] == expectedOutput[1]
     assert Lines[2] == expectedOutput[2]
     assert Lines[3] == expectedOutput[3]
-
 
 
 
