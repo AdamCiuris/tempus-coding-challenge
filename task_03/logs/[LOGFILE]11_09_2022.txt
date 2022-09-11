@@ -1,0 +1,2 @@
+ZeroDivisionError: Divided by zero.
+[LOG] <function div at 0x7efcbf7a7e20> ((8, 0) {}) ==> None <class 'NoneType'>

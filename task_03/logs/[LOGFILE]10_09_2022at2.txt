@@ -1,0 +1,4 @@
+[LOG] <function add at 0x7fab86d87910> ((3, 4) {}) ==>
+[LOG] <function add at 0x7fab86d87910> ((3, 54) {}) ==>
+FileNotFoundError: Try creating a new one.
+[LOG] <function cat at 0x7fab86d877f0> (('afdslksfjkdlkjfds',) {}) ==>None<class 'NoneType'>

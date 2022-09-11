@@ -1,43 +1,85 @@
-from cmath import log
-from functools import wraps
+from datetime import date
+from pathlib import Path
+
+logFileName =  "" #drastically simplifying log file creation if I use a global
+
+def newLogFile():
+    """used to reassign global logFileName. A new file is created on every call to the main function.
+    """
+    ourNewLogFile = "[LOGFILE]" +date.today().strftime("%d_%m_%Y") +".txt"
+    path = Path("./logs/"+ourNewLogFile)
+    counter = 0
+    # loops over files until it finds an unused filename
+    while(path.is_file()):
+        newName = "[LOGFILE]" +date.today().strftime("%d_%m_%Y")+"at"+str(counter) +".txt"
+        path = Path("./logs/"+newName)
+        ourNewLogFile = newName
+        counter+=1
+    return ourNewLogFile
+
+
+def setLogFileName(name="default"):
+    global logFileName 
+    if name == "default":
+        logFileName = newLogFile()
+    else: 
+        logFileName = name
+        
+
+def writeToLogFile(statement, filename=logFileName, path = "./logs/"):
+    """Writes to the file created during runtime. Will use a new file if first time running."""
+    path = Path("./logs/"+filename)
+    writer = None
+    if (path.is_file()):
+        writer = open(str(path), "a") # append if file exists
+    else:
+        writer = open(str(path), "w") # make new file if doesn't exist
+    writer.write(statement+"\n")
+    writer.close()
+
+
+
 
 def log_it(func):
-    @wraps(func) # allows for unwrapping of decorator
     def implementation(*args, **kwargs):
         """A wrapper function"""
     
-        statement = "[LOG] %s (%s %s) ==>" 
+        statement = "[LOG] %s (%s %s) ==> " 
+        fullStatement = ""
+        ret = None
+        
         try:
             statement = statement % (func, args, kwargs)  # fstring 
-
             ret = func(*args, **kwargs)
-            print(statement, ret, type(ret)) # memory address in hex
+            #if no error just set fullstatment up
+            fullStatement = statement+str(ret)+" " +str(type(ret))
         except FileNotFoundError as e: # most common exception
-            print("err: File not found.")
+            errMessage = "FileNotFoundError: Try creating a new one."
             ret = None
-            print(statement, ret, type(ret)) # memory address in hex
+            fullStatement =errMessage+"\n" +statement+str(ret)+" "+str(type(ret))  # how to refactor?
             raise e
         except ValueError as e: # can this even be reached?
             ret = None
-            print("err: Invalid value.")
-            print(statement, ret, type(ret)) # memory address in hex
+            errMessage = "ValueError: Invalid value."
+            fullStatement = errMessage+"\n"+statement+str(ret)+" "+str(type(ret))
             raise e
         except ZeroDivisionError as e:
             ret = None
-            print("err: Divided by zero.")
-            print(statement, ret, type(ret)) # memory address in hex
+            errMessage = "ZeroDivisionError: Divided by zero."
+            fullStatement =errMessage+"\n" +statement+str(ret)+" "+str(type(ret))
             raise e
         except TypeError as e:
             ret = None
-            print("err: Incompatible types.")
-            print(statement, ret, type(ret)) # memory address in hex
+            errMessage = "TypeError: Incompatible types."
+            fullStatement = errMessage+"\n"+statement+str(ret)+" "+str(type(ret))
             raise e
         except Exception as e: # prevents crashing for rest of uncommon exceptions
             ret = None
-            print("See error description: " + e.__str__())
-            print(statement, ret, type(ret)) # memory address in hex
+            errMessage = "Miscellaneous: " + e.__str__()
             raise e
-
+        finally: 
+            print(fullStatement)
+            writeToLogFile(fullStatement, filename=logFileName, path="./logs/")
         return ret # return this in case function has a return
     return implementation
 
@@ -79,11 +121,15 @@ def div(x, y):
 
 
 
+
+
 def main():
     stri = "" # used for cmd line
     # huh = log_it(lambda a,b: a*b)(1,2)
-    # print (huh)
-    # implicit string
+    
+    global logFileName 
+    logFileName = newLogFile()
+
     openingStatement = ("Please enter a 0 followed by a filename located in resources\n"
                        "OR enter a 1 followed by add, sub, mult, div for the arithmetic operation\n"
                        "follow the operator by the two numbers\n"

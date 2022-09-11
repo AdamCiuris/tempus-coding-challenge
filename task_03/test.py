@@ -3,25 +3,24 @@ from log_decorator import *
 import sys
 import logging
 import pytest
+from pathlib import Path
+import re
 
-# @pytest.fixture()
-# def logger():
-#     logger = logging.getLogger('Some.Logger')
-#     logger.setLevel(logging.INFO)
 
-#     return logger
 def setup_function(function):
     """
-    for stdout -s flag logging
+    for stdout -s flag logging, and file name setting, runs before each test
     """
     print("setting up", function) 
-
-# @pytest.mark.parametrize("add_params1", "add_params2", "add_expected", [
-#     (3,2, 3+2)
+    setLogFileName("tests")
 
 
-# ])
-
+def teardown_module(module):
+    """runs once at the end to clean up test file output"""
+    file1 = Path("./logs/tests")
+    file2 = Path("./logs/test_logfile().txt")
+    file1.unlink()
+    file2.unlink()
 
 def test_answer_add():
 
@@ -57,8 +56,8 @@ def test_logAdd01(capsys):
     """captures output from logger for add and tests it for correctness"""
     add(0,99)
     out, err = capsys.readouterr() #captures stdout 
-    sys.stdout.write("out:"+ out + "end out")
-    assert out.startswith("[LOG] <function add at ") # no guarantee that address is the same
+    # sys.stdout.write("out:"+ out + "end out")
+    assert out.startswith("[LOG] <function add at ")# no guarantee that address is the same
     assert out.endswith("> ((0, 99) {}) ==> 99 <class 'int'>\n")
 
 def test_logSub01(capsys):
@@ -110,9 +109,44 @@ def test_ZeroDivisionError():
         assert True
 
 def test_FileNotFoundError():
+    """file not found test. Will fail if the unlikely filename actually exists"""
     try:
         cat("&(*#$&*HFJKDSJHLKSD") # unlikely filename
         assert False #no exception
     except FileNotFoundError as e:
         assert True
+
+def test_logFile():
+    """testing the file logging capabilities"""
+    #begin setup
+    setLogFileName("test_logfile().txt")
+    assert div(3,2) == 1.5
+    ret = mult(0,99)
+    assert ret == 0
+
+    try:
+        ret = add('asfd', 24)
+        assert False # no exception raise
+    except TypeError as e:
+        assert True
+    #end setup
+    #begin parsing output file
+    reader = open("./logs/test_logfile().txt", "r")
+    Lines = reader.readlines()
+    reader.flush()
+    reader.close()
+    # sys.stdout.write(str(Lines))
+    #end parse
+    #remove mem addresses for test    
+    for i in range(len(Lines)):
+        Lines[i] = re.sub("0x.*?>",">", Lines[i]) # regex to remove memory addresses since hard to test
+    #mem addresses removed
+    expectedOutput = ["[LOG] <function div at > ((3, 2) {}) ==> 1.5 <class 'float'>\n","[LOG] <function mult at > ((0, 99) {}) ==> 0 <class 'int'>\n",  'TypeError: Incompatible types.\n', "[LOG] <function add at > (('asfd', 24) {}) ==> None <class 'NoneType'>\n"]
+    assert Lines[0] == expectedOutput[0]
+    assert Lines[1] == expectedOutput[1]
+    assert Lines[2] == expectedOutput[2]
+    assert Lines[3] == expectedOutput[3]
+
+
+
 

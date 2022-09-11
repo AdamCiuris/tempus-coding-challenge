@@ -1,0 +1,2 @@
+FileNotFoundError: Try creating a new one.
+[LOG] <function cat at 0x7f7d2b9f37f0> (('afdsfdsjkl',) {}) ==>None<class 'NoneType'>

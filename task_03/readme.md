@@ -4,7 +4,8 @@
 
 ```python3 init.py```
 
-Then, follow the instructions for the command line interface.
+Then, follow the instructions for the command line interface. Note that the cmd line interface will catch an error in order to continue execution.
+Initially I had thought that I was supposed to print logs to stdout so it also prints all logs to cmd line as well as write to a new file. You can see that it chooses a unique file name on every first run.
 
 For tests:
 ```sudo apt install python3pip```
@@ -12,6 +13,8 @@ For tests:
 ```sudo pip install pytest```
 
 run ```pytest test.py``` to complete tests.
+
+
 
 <h3>What is a decorator?</h3>
 A decorator is a way to modify the behavior of a function or method without changing the lower level implementation details. 
@@ -30,3 +33,7 @@ ret is the return of the function.
 <h3>@Annotation vs Regular Lambda</h3>
 
 When we implement a decorator on a function using the annotation there is no longer a way to call the base function. If we were to use the log_it function normally by passing in the function to be logged like ```log_it(add)(1,2)``` then we would still have the option to run the function add without the log. 
+
+<h3>What is pytest?</h3>
+
+A testing framework for python.
