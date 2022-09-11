@@ -16,9 +16,16 @@ def setup_function(function):
     """
     print("setting up", function) 
 
+# @pytest.mark.parametrize("add_params1", "add_params2", "add_expected", [
+#     (3,2, 3+2)
+
+
+# ])
+
+
 def test_answer_add():
 
-    assert add(3,2) == 3+2
+    assert add(3, 2) == 3+2
     assert add(-99,-99) == -99+-99
     assert add(0,99) == 0+99
     assert add(99,0) == 0+99
@@ -46,16 +53,44 @@ def test_answer_cat():
     assert cat("test.txt") == None # I/O stuff doesn't return anything
 
 
-def test_log01(capsys):
+def test_logAdd01(capsys):
     """
     captures output from logger for add and tests it for correctness
     """
-    # address = hex(id(add(0,99)))
     add(0,99)
     out, err = capsys.readouterr() #captures stdout 
     sys.stdout.write("out:"+ out + "end out")
-    # sys.stdout.write(address)
-
     assert out.startswith("[LOG] <function add at ") # no guarentee that address is the same
     assert out.endswith("> ((0, 99) {}) ==> 99 <class 'int'>\n")
-    
+
+def test_logSub01(capsys):
+    """
+    captures output from logger for sub and tests it for correctness
+    """
+    sub(0,99)
+    out, err = capsys.readouterr() #captures stdout 
+    assert out.startswith("[LOG] <function sub at ") # no guarentee that address is the same
+    assert out.endswith("> ((0, 99) {}) ==> -99 <class 'int'>\n")
+
+def test_logMult01(capsys):
+    """
+    captures output from logger for mult and tests it for correctness
+    """
+    ret = mult(0,99)
+    assert ret == 0
+    out, err = capsys.readouterr() #captures stdout 
+    assert out.startswith("[LOG] <function mult at ") # no guarentee that address is the same
+    assert out.endswith("> ((0, 99) {}) ==> 0 <class 'int'>\n")
+
+def test_logDiv01(capsys):
+    """
+    captures output from logger for div and tests it for correctness
+    """
+    ret = div(-99,-99)
+    assert ret == 1
+    out, err = capsys.readouterr() #captures stdout 
+    assert out.startswith("[LOG] <function div at ") # no guarentee that address is the same
+    assert out.endswith("> ((-99, -99) {}) ==> 1.0 <class 'float'>\n")
+
+
+

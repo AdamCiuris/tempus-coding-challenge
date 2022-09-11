@@ -13,15 +13,20 @@ def log_it(func):
             ret = func(*args, **kwargs)
             print(statement, ret, type(ret)) # memory address in hex
         except FileNotFoundError as e: # most common exception
-            print("File not found. Try creating the file and trying again.")
+            print("err: File not found. Try creating the file and trying again.")
             ret = None
             print(statement, ret, type(ret)) # memory address in hex
             raise e
         except ValueError as e: # can this even be reached?
             ret = None
-            print("Invalid value error.")
+            print("err: Invalid value error.")
             print(statement, ret, type(ret)) # memory address in hex
             raise e
+        except ZeroDivisionError as e:
+            ret = None
+            print("err: Divided by zero.")
+            print(statement, ret, type(ret)) # memory address in hex
+
         except Exception as e: # prevents crashing for rest of uncommon exceptions
             ret = None
             print("See error description: " + e.__str__())
