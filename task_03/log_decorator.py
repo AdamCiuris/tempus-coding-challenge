@@ -6,12 +6,12 @@ logFileName =  "" #drastically simplifying log file creation if I use a global
 def newLogFile():
     """used to reassign global logFileName. A new file is created on every call to the main function.
     """
-    ourNewLogFile = "[LOGFILE]" +date.today().strftime("%d_%m_%Y") +".txt"
+    ourNewLogFile = "[LOGFILE]" +date.today().strftime("%d_%m_%Y") +".txt" #makes a log file with today's date
     path = Path("./logs/"+ourNewLogFile)
     counter = 0
-    # loops over files until it finds an unused filename
+    # loops over files until it finds an unused filename, and then makes it
     while(path.is_file()):
-        newName = "[LOGFILE]" +date.today().strftime("%d_%m_%Y")+"at"+str(counter) +".txt"
+        newName = "[LOGFILE]" +date.today().strftime("%d_%m_%Y")+"at"+str(counter) +".txt" 
         path = Path("./logs/"+newName)
         ourNewLogFile = newName
         counter+=1
@@ -19,6 +19,7 @@ def newLogFile():
 
 
 def setLogFileName(name="default"):
+    """reassigns global logFileName"""
     global logFileName 
     if name == "default":
         logFileName = newLogFile()
@@ -41,6 +42,7 @@ def writeToLogFile(statement, filename=logFileName, path = "./logs/"):
 
 
 def log_it(func):
+    """logging decorator with exception and function details """
     def implementation(*args, **kwargs):
         """A wrapper function"""
     
