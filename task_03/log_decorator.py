@@ -13,20 +13,25 @@ def log_it(func):
             ret = func(*args, **kwargs)
             print(statement, ret, type(ret)) # memory address in hex
         except FileNotFoundError as e: # most common exception
-            print("err: File not found. Try creating the file and trying again.")
+            print("err: File not found.")
             ret = None
             print(statement, ret, type(ret)) # memory address in hex
             raise e
         except ValueError as e: # can this even be reached?
             ret = None
-            print("err: Invalid value error.")
+            print("err: Invalid value.")
             print(statement, ret, type(ret)) # memory address in hex
             raise e
         except ZeroDivisionError as e:
             ret = None
             print("err: Divided by zero.")
             print(statement, ret, type(ret)) # memory address in hex
-
+            raise e
+        except TypeError as e:
+            ret = None
+            print("err: Incompatible types.")
+            print(statement, ret, type(ret)) # memory address in hex
+            raise e
         except Exception as e: # prevents crashing for rest of uncommon exceptions
             ret = None
             print("See error description: " + e.__str__())
@@ -108,7 +113,7 @@ def main():
                 print("Wrong input, try again.")
         except Exception as e:
             # e.__str__() just converts object to string
-            print("Error raised in cmd line!: " + e.__str__()) # catch ValueError errors of int() in logger since they happen before it
+            print("Error caught in cmd line!: " + e.__str__()) # catch ValueError errors of int() in logger since they happen before it
 
 
 if __name__ == "__main__":
