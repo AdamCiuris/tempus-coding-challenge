@@ -1,7 +1,11 @@
+from cmath import log
+from functools import wraps
+
 def log_it(func):
-    
+    @wraps(func) # allows for unwrapping of decorator
     def implementation(*args, **kwargs):
-        
+        """A wrapper function"""
+    
         statement = "[LOG] %s (%s %s) ==>" 
         try:
             statement = statement % (func, args, kwargs)  # fstring 
@@ -60,16 +64,15 @@ def div(x, y):
     return x/y
 
 # call with log_it(add)(1,2) for example of no annotation decorator implementation
-def add(x,y):
-    return x+y
+# def add(x,y):
+#     return x+y
 
 
 
 def main():
     stri = "" # used for cmd line
-    huh, what= div(123,123)
-    print (huh)
-    print(what)
+    # huh = log_it(lambda a,b: a*b)(1,2)
+    # print (huh)
     # implicit string
     openingStatement = ("Please enter a 0 followed by a filename located in resources\n"
                        "OR enter a 1 followed by add, sub, mult, div for the arithmetic operation\n"
