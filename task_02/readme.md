@@ -14,7 +14,7 @@ Then, with your local port 1234 unused, run the container with this command in t
 
 That's it! Wait a few moments and visit http://localhost:1234/ 
 
-You may have to navigate to the notebook in the container's /app directory.
+You may have to navigate to the notebook in the container when you open Pluto.
 
 <h3>Ubuntu 22</h3>
 
