@@ -1,0 +1,18 @@
+FROM julia:latest
+LABEL maintaner="adamciuris@gmail.com"
+
+#doesn't seem to actually do anything. You NEED to run the docker run command with the ports option mapped anyways
+EXPOSE 1234/tcp
+VOLUME /app
+
+
+#install packages and add Pluto
+RUN julia -e 'using Pkg; Pkg.update(); Pkg.add("Pluto"); Pkg.add("Shuffle"); Pkg.precompile();'
+
+COPY / /
+WORKDIR /app
+
+#opens REPL
+ENTRYPOINT [ "julia" ]
+#runs docker setup file
+CMD [ "/setup.jl" ]

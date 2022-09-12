@@ -1,6 +1,22 @@
 <h2>Julia Pluto Notebook Exposition</h2>
 
-<h3>how to run</h3>
+<h2>how to run</h2>
+
+<h3>Docker</h3>
+
+With docker installed and running, navigate to the dockerfile's directory and run: 
+
+```docker build -t dockerfile .```
+
+Then, with your local port 1234 unused, run the container with this command in the same directory: 
+
+```docker run --detach --publish=1234:1234 dockerfile```
+
+That's it! Wait a few moments and visit http://localhost:1234/ 
+
+You may have to navigate to the notebook in the container's /app directory.
+
+<h3>Ubuntu 22</h3>
 
 run ```sudo apt-get install julia```if your ubuntu version is supported otherwise, ```snap install --classic julia```
 
